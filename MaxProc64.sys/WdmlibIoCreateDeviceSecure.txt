@@ -1,0 +1,8 @@
+This function is responsible for creating a device object for the driver and setting up some callback
+routines by making a call to WdmlibInit(). Lets explain a bit what this function does.
+
+WdmlibInit() resolves the base addresses of kernel functions IoCreateDeviceSecure and 
+IoValidateDeviceIoControlAccess. It then creates an object for the driver with device name
+"\\Device\\MaxProc64". All this is done in a callback routines which if finally called when the device is
+set up and ready to run.
+

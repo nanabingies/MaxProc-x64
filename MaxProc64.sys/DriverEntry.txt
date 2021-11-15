@@ -1,0 +1,11 @@
+The Driver Initialization Function is at offset 0x20008. The Driver begins by setting some global and
+local variables to zero. It also does a __security_check_cookie at the beginning and end of the function.
+It makes a call to WdmlibIoCreateDeviceSecure, and perhaps this is where it creates a device object and
+other stuffs. We'll investigate this function later on. Right after, it sets up a symbolic link and begins
+initializing the IRP dispatch Routines. IRP_MJ_CREATE, IRP_MJ_CLOSE and IRP_MJ_SET_INFORMATION
+were all initialized to sub_11008. IRP_MJ_DEVICE_CONTROL was set to sub_11008.
+
+The driver then made a call to FltRegisterFilter() and if successful, further made a function call to
+sub_110B4; The driver exits the DriverEntry by returning the error code returned by the call to FltRegisterFilter.
+
+[The reversed DriverEntry](DriverEntry_Reversed.c)
