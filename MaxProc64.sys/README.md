@@ -34,3 +34,8 @@ a IRP_MJ_DEVICE_CONTROL request. On entry the driver gets the ioctl code passed 
  The interesting code here is when the ioctl code passed is 0x220019. It first gets the index value passed from the user application and uses it as an array index to store the pid received after the call to PsGetCurrentProcess. This likely means on every succesful call to this ioctl code, the program stores its process ID value in at a particular index which might later be retrieved for a different operation. This will be investigated later. Point to note here is, the index received from the user application is checked if it is not equal to 0x3c or less than 0x42. if any of these checks fails, it exits this ioctl function.
 
  
+ # sub_110B4
+ This function is the last function called in DriverEntry and this essentially initializes a
+ OB_CALLBACK_OPERATION and calls ObRegisterCallback. This function is a way for the antivirus engine to filter calls to open a handle in its protected space. Lets further delve into the pre callback routine.
+
+ 
