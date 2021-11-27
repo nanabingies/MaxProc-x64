@@ -14,7 +14,7 @@ sub_110B4(){
         OB_OPERATION_REGISTRATION or = {PsProcessType, OB_OPERATION_HANDLE_CREATE, sub_111C0, nullsub_1}
         var_38.Operationregistration = &or;
         RtlInitUnicodeString(&var_30, "328620");
-        obReg = ObRegisterCallbacks(&var_38, &qword_1B380);
+        obReg = ObRegisterCallbacks(&var_38, &qword_1B380); // was set to 0 in DriverEntry
         if (NT_SUCCESS(obReg)){
 	        *byte_1B388 = 1;
         }
