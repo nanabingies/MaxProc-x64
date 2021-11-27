@@ -28,8 +28,7 @@ this function does literally nothing other than return STATUS_success.
 [The reversed function](sub_11008_Reversed.c)
 
 # sub_11030
-This function is called when a user land process inetarcts with the kernel driver. Thus when it receives
-a IRP_MJ_DEVICE_CONTROL request. On entry the driver gets the ioctl code passed with the IRP request and compares it against known codes. When the ioctl code passed is 0x220007 it sets the global variable byte_1B388 to 0 and when 0x220015 is passed, it sets byte_1B388 to 1.
+This function is called when a user land process inetarcts with the kernel driver, that's when it receives an IRP_MJ_DEVICE_CONTROL request. On entry the driver gets the ioctl code passed with the IRP request and compares it against known codes. When the ioctl code passed is 0x220007 it sets the global variable byte_1B388 to 0 and when 0x220015 is passed, it sets byte_1B388 to 1.
 
  The interesting code here is when the ioctl code passed is 0x220019. It first gets the index value passed from the user application and uses it as an array index to store the pid received after the call to PsGetCurrentProcess. This likely means on every succesful call to this ioctl code, the program stores its process ID value in at a particular index which might later be retrieved for a different operation. This will be investigated later. Point to note here is, the index received from the user application is checked if it is not equal to 0x3c or less than 0x42. if any of these checks fails, it exits this ioctl function.
 
@@ -38,4 +37,5 @@ a IRP_MJ_DEVICE_CONTROL request. On entry the driver gets the ioctl code passed 
  This function is the last function called in DriverEntry and this essentially initializes a
  OB_CALLBACK_OPERATION and calls ObRegisterCallback. This function is a way for the antivirus engine to filter calls to open a handle in its protected space. Lets further delve into the pre callback routine.
 
- 
+ # sub_111C0
+ This function is part of the callback operations being registered by the driver, let's delve into its implementation. 
