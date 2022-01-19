@@ -18,3 +18,13 @@ This routines is the Device Control handler. It starts of by comparing the IoCon
 This routine first sets some global variables to 0 then unregisters the filter driver. It then unregisters the callback routines that were registered at Driver Initialization and frees all memory that were allocated in the driver initialization process. It then deletes the device driver created as well as any symbolic links created earlier.
 
 # sub_1F068 (Callback Routine)
+
+On entry, the driver checks if the callback routine has already been registered. It does so by checking if the global variable byte_1C3A0 has been set. If it hasn't then the function is exited.
+
+Next, it checks if the context parameter passed to it is a valid address to perform read or write operations on. It then does some checks to make sure the PID isn't 8 or 4 and the second parameter passed is equal to either of 0xA, 0x1A, 0x40, 0x1, 0x0 or 0x2 before making a function call to sub_11C5C.
+
+We move to a switch statement which checks the value of the second parameter passed, a2. If a2 is 0x0 it checks if the context address passed is valid for read and write operations by making a call to API function MmIsAddressValid.
+The value at the context address is retrieved and passed as a parameter to function sub_11D0C. Next, a function call to sub_121A0 is made and on success it allocates space on the heap with size 0x200 and tag 'MAX'. The pool handle is passed as a parameter to two functions sub_11C9C and sub_1210C. We would get into what these functions do in particular later on. The allocated pool is then freed and the function jumps to LABEL_144 before exiting the function with the appropriate NTSTATUS code.
+
+If a2 is 0x1, it retrieves the value is a3+5 and checks if it's equal to either 0x1, 0x2, 0x7, 0x4, 0xB or 0x3. If neither check passes, the function exits with NTSTATUS STATUS_SUCCESS. The context parameter address is queried if it's valid for read and write operations. Calls to functions sub_11D0C and sub_121A0 are made and on success, space is the then allcoated on the nonpaged pool through a call to API function ExAllocatePoolWithTag with size 0x512 and tag 'MAX'. The allocated heap is then passed as a parameter to functions sub_11C9C and sub_1210C. An object attributes structure is initialized and it's structure is as follows: ObjectAttributes oa = { 0x30, 0, NULL, 0x40, NULL, NULL}.
+The ZwOpenKey routine is called which returns a handle to an existing registry key. 
