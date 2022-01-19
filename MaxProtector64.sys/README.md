@@ -16,3 +16,5 @@ This routines is the Device Control handler. It starts of by comparing the IoCon
 
 # Driver Unload
 This routine first sets some global variables to 0 then unregisters the filter driver. It then unregisters the callback routines that were registered at Driver Initialization and frees all memory that were allocated in the driver initialization process. It then deletes the device driver created as well as any symbolic links created earlier.
+
+# sub_1F068 (Callback Routine)
