@@ -18,7 +18,7 @@ NTSTATUS DriverEntry(PDRIVER_OBJECT pDriverObject, PUNICODE_STRING registryPath)
     pDRiverObject->MajorFunction[IRP_MJ_SET_INFORMATION] = sub_11008();
     pDriverObject->MajorFunction[IRP_MJ_DEVICE_CONTROL] = sub_11030();
 
-    NTSTATUS ntStatus = FltRegisterFilter()
+    NTSTATUS ntStatus = FltRegisterFilter(pDriverObject, &Flt_Registration, RetFilter)
     if (NT_SUCCESS(ntStatus)){
 	    sub_110B4();
     }
