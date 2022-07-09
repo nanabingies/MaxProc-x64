@@ -22,9 +22,8 @@ set up and ready to run.
 
 # DISPATCH ROUTINES
 # sub_11008
-This function is called when IRP_MJ_CREATE, IRP_MJ_CLOSE and IRP_MJ_SET_INFORMATION dispatch routines
-are invoked. It basically sets Irp->IoStatus.Status and Irp->IoStatus.Information to zero. I'm guessing 
-this function does literally nothing other than return STATUS_success.
+This function is called when IRP_MJ_CREATE, IRP_MJ_CLOSE and IRP_MJ_CLEANUP dispatch routines
+are invoked. It basically sets Irp->IoStatus.Status and Irp->IoStatus.Information to zero. and exits with nt status code STATUS_SUCCESS.
 [The reversed function](sub_11008_Reversed.c)
 
 # sub_11030
